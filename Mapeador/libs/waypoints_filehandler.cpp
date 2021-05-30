@@ -98,3 +98,38 @@ int waypts_bread_vect(FILE* fp, vector2D* dest, size_t bufferSize, uint32_t star
 
     return fread_s(dest, bufferSize, sizeof(vector2D), N, fp); // Devuelve cantidad de elementos asignados
 }
+
+int waypts_export(FILE* src, unsigned int mode, const char* export_filename) {
+    uint32_t vects = 0, aux = 0;
+    if ((aux = waypts_bget_nvects(src, &vects)))
+        return aux;
+
+    vector2D* path = (vector2D*)calloc(vects, sizeof(vector2D));
+    if (path == NULL)
+        return 16;
+
+    aux = waypts_bread_vect(src, path, vects, 0, vects);
+    if (aux != vects) {
+        free(path);
+        return 32;
+    }
+    
+    FILE* dest = NULL;
+    aux = fopen_s(&dest, export_filename, "wt");
+    if (aux || dest == NULL) {
+        free(path);
+        return 64;
+    }
+
+    if ( ( mode & EXPORT_CSV ) != 0) {
+        fprintf(dest, "posX,posY\n");
+        for (uint32_t i = 0; i < vects; i++) {
+            fprintf(dest, "%lf,%lf\n", path[i].x, path[i].y);
+        }
+    }
+
+    // Success
+    fclose(dest);
+    free(path);
+    return 0;
+}
