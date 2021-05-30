@@ -140,24 +140,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="libs\robot.cpp" />
+    <ClCompile Include="libs\SerialClass.cpp" />
+    <ClCompile Include="libs\vector.cpp" />
+    <ClCompile Include="libs\waypoints_filehandler.cpp" />
     <ClCompile Include="Main-mapeador.cpp" />
-    <ClCompile Include="robot.cpp" />
-    <ClCompile Include="SerialClass\SerialClass.cpp" />
-    <ClCompile Include="vector.cpp" />
-    <ClCompile Include="waypoints_filehandler.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="waypoints_filehandler.h" />
-    <ClInclude Include="resource.h" />
-    <ClInclude Include="robot.h" />
-    <ClInclude Include="SerialClass\SerialClass.h" />
-    <ClInclude Include="vector.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Mapeador.rc" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="logo-icon-256x256.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="libs\robot.h" />
+    <ClInclude Include="libs\SerialClass.h" />
+    <ClInclude Include="libs\vector.h" />
+    <ClInclude Include="libs\waypoints_filehandler.h" />
+    <ClInclude Include="res\resource.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
