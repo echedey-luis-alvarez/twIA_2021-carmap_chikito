@@ -234,22 +234,13 @@ int main() // Main function
 
 void getCOM_port_s(wchar_t* dest, size_t max) {
     unsigned char status = 0, portNumber = 0;
-    char tempPort[PORT_SZ]; // Trabajamos en cadena de caracteres simples y luego pasamos a *wchar_t
 
-    do { // Men� para indicar el puerto
+    do { // Menu para indicar el puerto
         printf("Escriba nombre del puerto serie a conectar: COM");
-        status = scanf_s("%hhu", &portNumber); // Recibe el numero como entero de tama�o unigned char m�ximo (ahorro de memoria)
-    } while (status == 0 or portNumber == 0); // TODO #2: rev. puerto COM puede ser == 0 ?
+        status = scanf_s("%hhu", &portNumber);
+    } while (status == 0 or portNumber == 0);
 
-    if (portNumber > 9) { // Si tiene m�s de un d�gito
-        strcpy_s(tempPort, "\\\\.\\COM"); // V�ase tutorial en https://geekytheory.com/como-usar-arduino-y-cplusplus
-    }
-    else { // Si solo tiene un d�gito
-        strcpy_s(tempPort, "COM");
-    }
-
-    sprintf_s(tempPort + strlen(tempPort), 4, "%d", portNumber); // Concatena el n�mero a la cadena inicial, max 3 chars concatenados, con formato entero
-    swprintf_s(dest, PORT_SZ, L"%hs", tempPort); // Cambia el formato de *char a *wchar_t, escribe en cadena destino
+    swprintf_s(dest, PORT_SZ, L"\\\\.\\COM%hhu", portNumber);
 
     return; // Fin de obtener puerto.
 }
