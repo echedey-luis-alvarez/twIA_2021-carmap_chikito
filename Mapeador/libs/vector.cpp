@@ -70,11 +70,13 @@ vector2D vector2D_scanf_s(void)
 	unsigned char status = 0;
 	do {
 		printf("Coordinate X of the vector: ");
+		fseek(stdin, 0, SEEK_END);
 		status = scanf_s("%lf", &result.x);
 	} while (status == 0);
 	status = 0;
 	do {
 		printf("Coordinate Y of the vector: ");
+		fseek(stdin, 0, SEEK_END);
 		status = scanf_s("%lf", &result.y);
 	} while (status == 0);
 	return result;

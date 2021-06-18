@@ -263,6 +263,7 @@ void getCOM_port_s(wchar_t* dest, size_t max) {
 
     do { // Menu para indicar el puerto
         printf("Escriba nombre del puerto serie a conectar: COM");
+        fseek(stdin, 0, SEEK_END);
         status = scanf_s("%hhu", &portNumber);
     } while (status == 0 or portNumber == 0);
 
