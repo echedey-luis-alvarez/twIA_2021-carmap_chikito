@@ -16,6 +16,7 @@
 #include "libs/SerialClass.h" // Retrieved from: https://github.com/Gmatarrubia/LibreriasTutoriales (modified local resources)
 #include "libs/waypoints_filehandler.h" // Librer�a para almacenar la trayectoria del robot en archivos binarios
 #include "libs/robot.h"
+#include "libs/mapper.h"
 #include "libs/gotoxy.h"
 
 // Bluetooth definitions
@@ -163,6 +164,9 @@ int main() // Main function
         clearScreen(70);
     }
 
+    // Dibujar ejes del mapa
+    mapGrid map = { 25, 50 };
+    map_mapAxisPrint(&map);
 
     // Procesamiento de todo el algoritmo: entrada, procesamiento, salida en bucle
     while ( Arduino->IsConnected() and status != 255) // Mientras el Arduino est� conectado se puede proceder
@@ -221,6 +225,7 @@ int main() // Main function
             gotoxy(0, 0);
             robot_print_summary(rb, DEF_PRECISION);
             
+            map_rbPrintFromRobot(&map, rb);
 
             // Esperamos a que se mueva el robot
             gotoxy(0, 3);
