@@ -72,20 +72,22 @@ typedef struct {
 // Bluetooth oriented
 void getCOM_port_s(wchar_t*, size_t);
     /* Obtiene puerto COM desde stdin; args.:
-    puntero a cadena de caracteres anchos donde se guarda el puerto a utilizar
-    tama�o max de la cadena
+    * puntero a cadena de caracteres anchos donde se guarda el puerto a utilizar
+    * tama�o max de la cadena
     */
 
 int command_Arduino_time_s(char* buffer, size_t sz, bool tipoMovimiento, bool sentido, unsigned int tiempoMilis);
     /* Genera comando con formato "t:tipo_movimiento,sentido,tiempo;"
-    el tama�o m�nimo de buffer (sz) es 18
-    tipo_movimiento: MOV_lineal o MOV_rotacion
-    sentido: MOV_haciaDelante, MOV_haciaAtras, MOV_haciaIzq o MOV_haciaDer
-    tiempoMillis: max 5 cifras
+    *   -tipo_movimiento: lin o rot
+    *   -sentido: del, atr, izq o der
+    *   -tiempo: <= 32767 millis
+    * el tama�o m�nimo de buffer (sz) es 18
+    * tipoMovimiento: MOV_lineal o MOV_rotacion
+    * sentido: MOV_haciaDelante, MOV_haciaAtras, MOV_haciaIzq o MOV_haciaDer
+    * tiempoMillis: max 5 cifras
     */
 
 // GUI functions
-void gotoxy(short x, short y);
 void DrawMap(coordinate*);
 void clearScreen(int numberofCharactersYouWantToClearInConsole); // Self-explanatory
 
@@ -97,14 +99,14 @@ int comandoArduino_wrapper(char* Buffer, size_t sz, tiempos* mov); // Intermedia
 int main() // Main function
 {
     // This is where fun BEGINS
-
-    // Initialize bluetooth conection variables
+    
+    // Bluetooth conection variables
     Serial* Arduino;
     wchar_t puerto[PORT_SZ];
     char BufferSalida[BUF] = "\0", BufferEntrada[BUF] = "\0", cadena[BUF] = "\0";
     int contador = 0;
 
-    // Initialize "waypoints file" variables
+    // Filehandling variables
     FILE* fp_puntos = NULL;
     char* nombreArchivoPuntos = (char*)calloc(NAME_SZ, sizeof(char));
 
@@ -407,17 +409,5 @@ void clearScreen(int spaces) {
     for (long i = 0; i < spaces; i++) {
         putchar(' ');
     }
-    return;
-}
-
-// map function 
-void gotoxy(short x, short y)
-{
-    HANDLE map = GetStdHandle(STD_OUTPUT_HANDLE);
-    COORD cartsyst = { 0, 0 };
-    cartsyst.X = x;
-    cartsyst.Y = y;
-
-    SetConsoleCursorPosition(map, cartsyst);
     return;
 }
