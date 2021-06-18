@@ -230,8 +230,8 @@ int main() // Main function
             // Esperamos a que se mueva el robot
             gotoxy(0, 3);
             printf("Waiting...");
-            Sleep(millisWait);
             gotoxy(rb->position.x, rb->position.y);
+            Sleep(millisWait);
             gotoxy(0, 3);
             clearScreen(12);
             gotoxy(rb->position.x, rb->position.y);
