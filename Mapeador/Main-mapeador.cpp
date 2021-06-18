@@ -15,6 +15,7 @@
 #include "libs/vector.h" // Custom library to create and operate vectors easily
 #include "libs/SerialClass.h" // Retrieved from: https://github.com/Gmatarrubia/LibreriasTutoriales (modified local resources)
 #include "libs/waypoints_filehandler.h" // Librer�a para almacenar la trayectoria del robot en archivos binarios
+#include "libs/gotoxy.h"
 
 // Bluetooth definitions
 #define PORT_SZ 15 // Port wide character string size
