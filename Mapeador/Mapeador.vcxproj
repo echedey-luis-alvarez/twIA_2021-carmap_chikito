@@ -140,6 +140,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="libs\gotoxy.cpp" />
+    <ClCompile Include="libs\mapper.cpp" />
     <ClCompile Include="libs\robot.cpp" />
     <ClCompile Include="libs\SerialClass.cpp" />
     <ClCompile Include="libs\vector.cpp" />
@@ -153,6 +155,8 @@
     <Image Include="logo-icon-256x256.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="libs\gotoxy.h" />
+    <ClInclude Include="libs\mapper.h" />
     <ClInclude Include="libs\robot.h" />
     <ClInclude Include="libs\SerialClass.h" />
     <ClInclude Include="libs\vector.h" />
