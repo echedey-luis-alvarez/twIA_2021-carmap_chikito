@@ -3,30 +3,51 @@
 #ifndef ROBOTH
 #define ROBOTH
 
+#include "vector.h"
+
 typedef struct _robot robot;
 
-//units of properties given in metrical system
+// Units of properties given in metrical system
 struct _robot {
+	// Physical properties
+	struct {
+		struct {
+			double lineal, angular;
+		} vel;
 
-	struct velocity {
-		double lineal, angular;
-	}velocity1;
+		struct {
+			double lineal, angular;
+		} accel;
 
-	struct acceleration {
-		double lineal, angular;
-	}acceleration1;	
+		struct {
+			double length, width, height, wheel_radius;
+		} dim;
 
-	struct dimensions {
-		double length, width, height, wheel_radius;
-	}dimension1;
+		struct {
+			double frame, wheel;
+		} mass;
+	} physical;
+	
+	// Movement properties
+	struct {
+		double linMove, rotAngle;
+	} defMoves;
 
-	struct mass {
-		double structure, wheel;
-	}mass1;
-
+	vector2D position, lastMove;
+	double angle; // 0 rad = +OX, counter-clockwise
+	char name[30];
 };
 
-robot robot_scanf_s(void);
-void robot_print(robot robot1, unsigned char precision);
+struct _command {
+	char type;
+	union {
+		double duration;
+		unsigned long long int stps;
+	} quantity;
+};
+
+void robot_scanf_s(robot*);
+void robot_print_all(robot*, unsigned char precision);
+void robot_print_summary(robot*, unsigned char precision);
 
 #endif

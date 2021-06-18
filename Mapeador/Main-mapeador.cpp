@@ -15,6 +15,7 @@
 #include "libs/vector.h" // Custom library to create and operate vectors easily
 #include "libs/SerialClass.h" // Retrieved from: https://github.com/Gmatarrubia/LibreriasTutoriales (modified local resources)
 #include "libs/waypoints_filehandler.h" // Librer�a para almacenar la trayectoria del robot en archivos binarios
+#include "libs/robot.h"
 #include "libs/gotoxy.h"
 
 // Bluetooth definitions
@@ -104,7 +105,7 @@ int main() // Main function
     Serial* Arduino;
     wchar_t puerto[PORT_SZ];
     char BufferSalida[BUF] = "\0", BufferEntrada[BUF] = "\0", cadena[BUF] = "\0";
-    int contador = 0;
+    unsigned int contador = 0, millisWait = 0;
 
     // Filehandling variables
     FILE* fp_puntos = NULL;
@@ -122,6 +123,20 @@ int main() // Main function
     // Declarate and initialize variable type tiempos
     tiempos* p_time1 = (tiempos*)calloc(1, sizeof(tiempos));
     if (!p_time1) return 23;
+    // Robot properties
+    robot* rb = (robot*)calloc(1, sizeof(robot));
+    if (!rb) return 20;
+    rb->position = { 0, 0 };
+    rb->angle = 0;
+    rb->physical.vel.lineal = 0.2;
+    rb->physical.vel.angular = 1;
+    rb->defMoves.linMove = 0.10;
+    rb->defMoves.rotAngle = M_PI / 2;
+    robot_print_all(rb, DEF_PRECISION);
+
+    // User-input and general purpouse vars
+    int puls = 0;
+    char status = 0;
 
     // Begin getting port number to use
     getCOM_port_s(puerto, PORT_SZ); // Men� que obtiene el nombre del puerto a usar
@@ -167,7 +182,7 @@ int main() // Main function
     (void)_getch();
 
     // Limpieza de lo escrito previamente
-    for (int i = 0; i < 12; i++) {
+    for (int i = 0; i < 30; i++) {
         gotoxy(0, i);
         clearScreen(70);
     }
@@ -217,13 +232,21 @@ int main() // Main function
             Arduino->WriteData(BufferSalida, BUF);
 
             // Guardar vector posición
-            waypts_bappend_vect(fp_puntos, &p_coord1->coords);
+            waypts_bappend_vect(fp_puntos, &rb->position);
 
             // Imprimir posición en el mapa de la pantalla
             DrawMap(p_coord1);
+            // Imprimir información por pantalla
+            gotoxy(0, 0);
+            robot_print_summary(rb, DEF_PRECISION);
+            
 
             // Esperamos a que se mueva el robot
-            Sleep(max(max(p_time1->forward, p_time1->backwards), max(p_time1->left, p_time1->rigth)) * 1000);
+            gotoxy(0, 3);
+            printf("Waiting...");
+            Sleep(millisWait);
+            gotoxy(0, 3);
+            clearScreen(12);
         }
         
         contador++;

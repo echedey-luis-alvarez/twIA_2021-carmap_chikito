@@ -1,89 +1,118 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "robot.h"
 
 //function that ask for the properties of the robot
-robot robot_scanf_s(void) {
-
-	robot result;
+void robot_scanf_s(robot *r) {
 	unsigned char status = 0;
 
 	do {
-		printf("Enter lineal velocity: ");
-		status = scanf_s("%lf", &result.velocity1.lineal);
+		printf("Enter lineal velocity (m/s): ");
+		fseek(stdin, 0, SEEK_END);
+		status = scanf_s("%lf", &r->physical.vel.lineal);
 	} while (status == 0);
 	status = 0;
 
 	do {
-		printf("Enter angular velocity: ");
-		status = scanf_s("%lf", &result.velocity1.angular);
+		printf("Enter angular velocity (rad/s): ");
+		fseek(stdin, 0, SEEK_END);
+		status = scanf_s("%lf", &r->physical.vel.angular);
 	} while (status == 0);
 	status = 0;
 
 	do {
-		printf("Enter lineal acceleration: ");
-		status = scanf_s("%lf", &result.acceleration1.lineal);
+		printf("Enter lineal acceleration (m/s^2): ");
+		fseek(stdin, 0, SEEK_END);
+		status = scanf_s("%lf", &r->physical.accel.lineal);
 	} while (status == 0);
 	status = 0;
 
 	do {
-		printf("Enter angular acceleration: ");
-		status = scanf_s("%lf", &result.acceleration1.angular);
+		printf("Enter angular acceleration (rad/s^2): ");
+		fseek(stdin, 0, SEEK_END);
+		status = scanf_s("%lf", &r->physical.accel.angular);
 	} while (status == 0);
 	status = 0;
 
 	do {
-		printf("Enter length: ");
-		status = scanf_s("%lf", &result.dimension1.length);
+		printf("Enter length (m): ");
+		fseek(stdin, 0, SEEK_END);
+		status = scanf_s("%lf", &r->physical.dim.length);
 	} while (status == 0);
 	status = 0;
 
 	do {
-		printf("Enter width: ");
-		status = scanf_s("%lf", &result.dimension1.width);
+		printf("Enter width (m): ");
+		fseek(stdin, 0, SEEK_END);
+		status = scanf_s("%lf", &r->physical.dim.width);
 	} while (status == 0);
 	status = 0;
 
 	do {
-		printf("Enter height: ");
-		status = scanf_s("%lf", &result.dimension1.height);
+		printf("Enter height (m): ");
+		fseek(stdin, 0, SEEK_END);
+		status = scanf_s("%lf", &r->physical.dim.height);
 	} while (status == 0);
 	status = 0;
 
 	do {
-		printf("Enter wheel radius: ");
-		status = scanf_s("%lf", &result.dimension1.wheel_radius);
+		printf("Enter wheel radius (m): ");
+		fseek(stdin, 0, SEEK_END);
+		status = scanf_s("%lf", &r->physical.dim.wheel_radius);
 	} while (status == 0);
 	status = 0;
 
 	do {
-		printf("Enter structure mass: ");
-		status = scanf_s("%lf", &result.mass1.structure);
+		printf("Enter structure mass (kg): ");
+		fseek(stdin, 0, SEEK_END);
+		status = scanf_s("%lf", &r->physical.mass.frame);
 	} while (status == 0);
 	status = 0;
 
 	do {
-		printf("Enter wheel mass: ");
-		status = scanf_s("%lf", &result.mass1.wheel);
+		printf("Enter wheel mass (kg): ");
+		fseek(stdin, 0, SEEK_END);
+		status = scanf_s("%lf", &r->physical.mass.wheel);
 	} while (status == 0);
-	status = 0;
 
-	return result;
-
+	return;
 }
 
 //function that shows the properties of the robot
-void robot_print(robot robot1, unsigned char precision) {
+void robot_print_all(robot* rb, unsigned char p) {
+	printf("Robot \"%30s\" @", rb->name);
+	vector2D_print(rb->position, p);
+	printf("<%.*f\nProperties\n\
+	Velocities:\n\
+	\t - Lin: %.*f\n\
+	\t - Ang: %.*f\n\
+	Accelerations:\n\
+	\t - Lin: %.*f\n\
+	\t - Ang: %.*f\n\
+	Mass:\n\
+	\t - Frame: %.*f\n\
+	\t - Wheel: %.*f\n\
+	Dimensions:\n\
+	\t - Wheel radius: %.*f\n\
+	\t - Lenght: %.*f\n\
+	\t - Widht: %.*f\n\
+	\t - Height: %.*f\n\
+	Default movements:\n\
+	\t - Lineal: %.*f\n\
+	\t - Angular: %.*f\n\
+	SI Units\n", 
+		p, rb->angle,
+		p, rb->physical.vel.lineal, p, rb->physical.vel.angular,
+		p, rb->physical.accel.lineal, p, rb->physical.accel.angular,
+		p, rb->physical.mass.frame, p, rb->physical.mass.wheel,
+		p, rb->physical.dim.wheel_radius, p, rb->physical.dim.length, p, rb->physical.dim.width, p, rb->physical.dim.height,
+		p, rb->defMoves.linMove, p, rb->defMoves.rotAngle);
 
-	printf("\nLinear velocity: %.*f m/s", precision, robot1.velocity1.lineal);
-	printf("\nAngular velocity: %.*f rad/s", precision, robot1.velocity1.angular);
-	printf("\nLinear acceleration: %.*f m/s^2", precision, robot1.acceleration1.lineal);
-	printf("\nAngular acceleration: %.*f rad/s^2", precision, robot1.acceleration1.angular);
-	printf("\nLength: %.*f m", precision, robot1.dimension1.length);
-	printf("\nWidth: %.*f m", precision, robot1.dimension1.width);
-	printf("\nHeight: %.*f m", precision, robot1.dimension1.height);
-	printf("\nWheel radius: %.*f m", precision, robot1.dimension1.length);
-	printf("\nStructure mass: %.*f kg", precision, robot1.mass1.structure);
-	printf("\nWheel mass: %.*f kg\n", precision, robot1.mass1.wheel);
+	return;
+}
 
+void robot_print_summary(robot* rb, unsigned char p) {
+	printf("Robot @"); vector2D_print(rb->position, p);
+	printf("<%.*f Distance from origin = %.*f", p, rb->angle, p, vector2D_modulo(rb->position));
 }
