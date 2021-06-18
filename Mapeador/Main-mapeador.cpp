@@ -224,17 +224,16 @@ int main() // Main function
             // Imprimir información por pantalla
             gotoxy(0, 0);
             robot_print_summary(rb, DEF_PRECISION);
-            
-            map_rbPrintFromRobot(&map, rb);
 
             // Esperamos a que se mueva el robot
             gotoxy(0, 3);
             printf("Waiting...");
-            gotoxy(rb->position.x, rb->position.y);
             Sleep(millisWait);
             gotoxy(0, 3);
             clearScreen(12);
-            gotoxy(rb->position.x, rb->position.y);
+
+            // Mostrar robot en la nueva posición
+            map_rbPrintFromRobot(&map, rb);
         }
         
         contador++;
