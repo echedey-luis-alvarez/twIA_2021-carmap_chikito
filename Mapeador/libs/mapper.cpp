@@ -19,7 +19,12 @@ void map_mapAxisPrint(mapGrid* mg) {
 }
 
 void map_charPrint(mapGrid* mg, mapCharObj* mc) {
-    gotoxy(rint(((double)mg->originX + mc->x) / mg->scale * 2), rint(((double)mg->originY - mc->y) / mg->scale));
+    short x = rint(((double)mg->originX + mc->x) * 2),
+        y = rint(((double)mg->originY) - mc->y);
+    gotoxy(
+        x,
+        y
+    );
     putchar(mc->c);
     return;
 }
@@ -33,8 +38,8 @@ void map_rbPrint(mapGrid* mg, mapRbObj* mr) {
 void map_rbPrintFromRobot(mapGrid* mg, robot* rb) {
     mapRbObj mr = { 0 };
     mr.center = {
-        (short)rint(rb->position.x),
-        (short)rint(rb->position.y),
+        (short)rint(rb->position.x / rb->defMoves.linMove),
+        (short)rint(rb->position.y / rb->defMoves.linMove),
         '#'
     };
     mr.dir = {
@@ -42,8 +47,6 @@ void map_rbPrintFromRobot(mapGrid* mg, robot* rb) {
         mr.center.y + (short)rint(sin(rb->angle)),
         '+'
     };
-
-    mg->scale = rb->defMoves.linMove;
     
     map_rbPrint(mg, &mr);
     return;

@@ -18,7 +18,6 @@ typedef struct _mapRbObj mapRbObj;
 
 struct _mapGrid {
 	short originX, originY;
-	double scale;
 };
 
 struct _mapCharObj {

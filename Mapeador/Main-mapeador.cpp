@@ -159,7 +159,7 @@ int main() // Main function
     (void)_getch();
 
     // Limpieza de lo escrito previamente
-    for (int i = 0; i < 30; i++) {
+    for (int i = 0; i < 35; i++) {
         gotoxy(0, i);
         clearScreen(70);
     }
@@ -231,8 +231,10 @@ int main() // Main function
             gotoxy(0, 3);
             printf("Waiting...");
             Sleep(millisWait);
+            gotoxy(rb->position.x, rb->position.y);
             gotoxy(0, 3);
             clearScreen(12);
+            gotoxy(rb->position.x, rb->position.y);
         }
         
         contador++;
