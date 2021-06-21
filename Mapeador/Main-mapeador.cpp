@@ -111,9 +111,11 @@ int main() // Main function
     rb->defMoves.rotAngle = M_PI / 2;
     robot_print_all(rb, DEF_PRECISION);
 
-    // User-input and general purpouse vars
+    // User-input, GUI and general purpouse vars
     int puls = 0;
     char status = 0;
+    mapGrid map = { 25, 30 };
+    COORD bufOutPos = { map.originX, map.originY };
 
     // Begin getting port number to use
     getCOM_port_s(puerto, PORT_SZ); // Men� que obtiene el nombre del puerto a usar
@@ -165,7 +167,6 @@ int main() // Main function
     }
 
     // Dibujar ejes del mapa
-    mapGrid map = { 25, 50 };
     map_mapAxisPrint(&map);
 
     // Procesamiento de todo el algoritmo: entrada, procesamiento, salida en bucle
@@ -228,12 +229,14 @@ int main() // Main function
             // Esperamos a que se mueva el robot
             gotoxy(0, 3);
             printf("Waiting...");
+            gotoxy(bufOutPos);
             Sleep(millisWait);
             gotoxy(0, 3);
             clearScreen(12);
 
             // Mostrar robot en la nueva posición
             map_rbPrintFromRobot(&map, rb);
+            getCursorPos(&bufOutPos);
         }
         
         contador++;

@@ -2,8 +2,25 @@
 
 void gotoxy(short x, short y)
 {
-    HANDLE stdoutHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+    gotoxy({ x, y });
 
-    SetConsoleCursorPosition(stdoutHandle, { x, y });
+    return;
+}
+
+void gotoxy(COORD p)
+{
+    HANDLE stdoutH = GetStdHandle(STD_OUTPUT_HANDLE);
+
+    SetConsoleCursorPosition(stdoutH, p);
+    return;
+}
+
+void getCursorPos(PCOORD pCoord) {
+    HANDLE stdoutH = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_SCREEN_BUFFER_INFO cInfo;
+
+    GetConsoleScreenBufferInfo(stdoutH, &cInfo);
+
+    *pCoord = cInfo.dwCursorPosition;
     return;
 }
