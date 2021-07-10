@@ -89,7 +89,7 @@ int rb_moveByDefs(robot* rb, char move, char* buffer, size_t sz, unsigned int* c
 int main() // Main function
 {
     // This is where fun BEGINS
-    
+
     // Bluetooth conection variables
     Serial* Arduino;
     wchar_t puerto[PORT_SZ];
@@ -161,7 +161,7 @@ int main() // Main function
     (void)_getch();
 
     // Limpieza de lo escrito previamente
-    for (int i = 0; i < 35; i++) {
+    for (register unsigned int i = 0; i < 35; i++) {
         gotoxy(0, i);
         clearScreen(70);
     }
@@ -178,11 +178,9 @@ int main() // Main function
         switch (puls) {
         case EOF:
         case Key_ESC:
-            gotoxy(0, 0);
-            printf("Exiting program...");
+            fclose(fp_puntos);
             Arduino->~Serial();
-            status = 255;
-            break;
+            (puls == Key_ESC) ? exit(EXIT_SUCCESS) : exit(EXIT_FAILURE);
 
         case 224: // Special key
             switch (_getch())
