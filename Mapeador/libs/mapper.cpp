@@ -3,7 +3,7 @@
 
 #include "mapper.h"
 
-void map_mapAxisPrint(mapGrid* mg) {
+void map_mapAxisPrint(const mapGrid* mg) {
     short minDim = min(mg->originX, mg->originY);
     for (int i = 0; i <= 4 * minDim; i++) {
         gotoxy(i, mg->originY);
@@ -35,7 +35,7 @@ void map_rbPrint(mapGrid* mg, mapRbObj* mr) {
     return;
 }
 
-void map_rbPrintFromRobot(mapGrid* mg, robot* rb) {
+void map_rbPrintFromRobot(mapGrid* mg, const robot* rb) {
     mapRbObj mr = { 0 };
     mr.center = {
         (short)rint(rb->position.x / rb->defMoves.linMove),

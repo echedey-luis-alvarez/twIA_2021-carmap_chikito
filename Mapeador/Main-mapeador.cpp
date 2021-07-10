@@ -229,7 +229,7 @@ int main() // Main function
             // Esperamos a que se mueva el robot
             gotoxy(0, 3);
             printf("Waiting...");
-            gotoxy(bufOutPos);
+            gotoxy_coord(&bufOutPos);
             Sleep(millisWait);
             gotoxy(0, 3);
             clearScreen(12);

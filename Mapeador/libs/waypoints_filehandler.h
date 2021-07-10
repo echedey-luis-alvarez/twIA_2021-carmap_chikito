@@ -36,7 +36,7 @@ int waypts_bget_nvects(FILE* fp, uint32_t* dest);
     * Devuelve 0 si es un éxito, no-0 en cualquier otro caso
     */
 
-int waypts_bappend_vect(FILE* fp, vector2D* src);
+int waypts_bappend_vect(FILE* fp, const vector2D* src);
     /* Añade 1 vector de dos componentes (src) al archivo apuntado por fp, en binario
     * fp: puntero a archivo que se modifica
     * src: vector que se concatena al archivo

@@ -29,9 +29,9 @@ struct _mapRbObj {
 	mapCharObj center, dir;
 };
 
-void map_mapAxisPrint(mapGrid*);
-void map_charPrint(mapGrid*, mapCharObj*);
+void map_mapAxisPrint(const mapGrid*);
+void map_charPrint(mapGrid*, const mapCharObj*);
 void map_rbPrint(mapGrid*, mapRbObj*);
-void map_rbPrintFromRobot(mapGrid*, robot*);
+void map_rbPrintFromRobot(mapGrid*, const robot*);
 
 #endif //!MAPPER_H

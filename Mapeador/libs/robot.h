@@ -47,7 +47,7 @@ struct _command {
 };
 
 void robot_scanf_s(robot*);
-void robot_print_all(robot*, unsigned char precision);
-void robot_print_summary(robot*, unsigned char precision);
+void robot_print_all(const robot*, unsigned char precision);
+void robot_print_summary(const robot*, unsigned char precision);
 
 #endif

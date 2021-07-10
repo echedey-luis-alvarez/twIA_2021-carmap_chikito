@@ -2,16 +2,17 @@
 
 void gotoxy(short x, short y)
 {
-    gotoxy({ x, y });
+    COORD p = { x, y };
+    gotoxy_coord(&p);
 
     return;
 }
 
-void gotoxy(COORD p)
+void gotoxy_coord(const PCOORD p)
 {
     HANDLE stdoutH = GetStdHandle(STD_OUTPUT_HANDLE);
 
-    SetConsoleCursorPosition(stdoutH, p);
+    SetConsoleCursorPosition(stdoutH, *p);
     return;
 }
 

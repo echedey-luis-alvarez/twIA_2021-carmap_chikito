@@ -49,7 +49,7 @@ int waypts_bget_nvects(FILE* fp, uint32_t* dest) {
     return 0;
 }
 
-int waypts_bappend_vect(FILE* fp, vector2D* src) {
+int waypts_bappend_vect(FILE* fp, const vector2D* src) {
     uint32_t n_vectors = 0;
     int status = 0; // Variable genérica para guardar números de error o de variables asignadas
 

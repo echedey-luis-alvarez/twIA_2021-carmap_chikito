@@ -80,7 +80,7 @@ void robot_scanf_s(robot *r) {
 }
 
 //function that shows the properties of the robot
-void robot_print_all(robot* rb, unsigned char p) {
+void robot_print_all(const robot* rb, unsigned char p) {
 	printf("Robot \"%30s\" @", rb->name);
 	vector2D_print(rb->position, p);
 	printf("<%.*f\nProperties\n\
@@ -112,7 +112,7 @@ void robot_print_all(robot* rb, unsigned char p) {
 	return;
 }
 
-void robot_print_summary(robot* rb, unsigned char p) {
+void robot_print_summary(const robot* rb, unsigned char p) {
 	printf("Robot @"); vector2D_print(rb->position, p);
 	printf("<%.*f Distance from origin = %.*f", p, rb->angle, p, vector2D_modulo(rb->position));
 }
