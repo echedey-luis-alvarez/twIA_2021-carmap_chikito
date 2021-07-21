@@ -63,7 +63,7 @@
 //// Program functions ////
 
 // Bluetooth oriented
-void getCOM_port_s(wchar_t*, size_t);
+static void getCOM_port_s(wchar_t*, size_t);
     /* Obtiene puerto COM desde stdin; args.:
     * puntero a cadena de caracteres anchos donde se guarda el puerto a utilizar
     * tama�o max de la cadena
@@ -246,7 +246,7 @@ int main() // Main function
     return 0; // Exit without errors
 }
 
-void getCOM_port_s(wchar_t* dest, size_t max) {
+static void getCOM_port_s(wchar_t* dest, size_t sz) {
     unsigned char status = 0, portNumber = 0;
 
     do { // Menu para indicar el puerto
@@ -255,7 +255,7 @@ void getCOM_port_s(wchar_t* dest, size_t max) {
         status = scanf_s("%hhu", &portNumber);
     } while (status == 0 or portNumber == 0);
 
-    swprintf_s(dest, PORT_SZ, L"\\\\.\\COM%hhu", portNumber);
+    swprintf_s(dest, sz, L"\\\\.\\COM%hhu", portNumber);
 
     return; // Fin de obtener puerto.
 }
