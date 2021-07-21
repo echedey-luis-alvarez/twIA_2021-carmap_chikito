@@ -81,7 +81,7 @@ int command_Arduino_time_s(char* buffer, size_t sz, bool tipoMovimiento, bool se
     */
 
 // GUI functions
-void clearScreen(int numberofCharactersYouWantToClearInConsole); // Self-explanatory
+static inline void clearScreen(unsigned int numberofCharactersYouWantToClearInConsole); // Self-explanatory
 
 // Robot functions
 int rb_moveByDefs(robot* rb, char move, char* buffer, size_t sz, unsigned int* calculatedDuration);
@@ -325,8 +325,8 @@ int rb_moveByDefs(robot* rb, char move, char* buffer, size_t sz, unsigned int *d
     return 0;
 }
 
-void clearScreen(int spaces) {
-    for (long i = 0; i < spaces; i++) {
+static inline void clearScreen(unsigned int spaces) {
+    for (register unsigned int i = spaces; i--; ) {
         putchar(' ');
     }
     return;
