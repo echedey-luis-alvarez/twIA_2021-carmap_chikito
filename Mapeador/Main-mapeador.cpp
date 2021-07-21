@@ -287,13 +287,21 @@ int command_Arduino_time_s(char* buffer, size_t sz, bool tipoMovimiento, bool se
 }
 
 int rb_moveByDefs(robot* rb, char move, char* buffer, size_t sz, unsigned int *duration) {
+    static vector2D directed = { 1, 0 }, movement;
+    static double lAngle = 0;
     if (move == MOVE_forward or move == MOVE_backward) {
-        vector2D movement = vector2D_productByScalar(vector2D_rotate({ 1, 0 }, rb->angle), rb->defMoves.linMove);
+        if (lAngle != rb->angle) {
+            // Update last angle and the "directed" vector only when rb->angle changes
+            // Otherwise, last values are assumed
+            lAngle = rb->angle;
+            directed = { cos(lAngle), sin(lAngle) };
+        }
+        movement = vector2D_productByScalar(&directed, rb->defMoves.linMove);
         if (move == MOVE_forward) {
-            rb->position = vector2D_add(rb->position, movement);
+            rb->position = vector2D_add(&rb->position, &movement);
         }
         else {
-            rb->position = vector2D_substract(rb->position, movement);
+            rb->position = vector2D_substract(&rb->position, &movement);
         }
 
         command_Arduino_time_s(buffer, sz, MOV_lineal, 

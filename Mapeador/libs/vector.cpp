@@ -8,58 +8,58 @@
 #include "vector.h"
 
 /* Basic operations */
-vector2D vector2D_add(vector2D vector1, vector2D vector2)
+vector2D vector2D_add(const vector2D * vector1, const vector2D * vector2)
 {
-	vector2D result = { vector1.x + vector2.x, vector1.y + vector2.y };
+	vector2D result = { vector1->x + vector2->x, vector1->y + vector2->y };
 	return result;
 }
 
-vector2D vector2D_substract(vector2D vector1, vector2D vector2)
+vector2D vector2D_substract(const vector2D * vector1, const vector2D * vector2)
 {
-	vector2D result = { vector1.x - vector2.x, vector1.y - vector2.y };
+	vector2D result = { vector1->x - vector2->x, vector1->y - vector2->y };
 	return result;
 }
 
-vector2D vector2D_productByScalar(vector2D vector, double lambda)
+vector2D vector2D_productByScalar(const vector2D * vector, double lambda)
 {
-	vector2D result = { vector.x * lambda, vector.y * lambda };
+	vector2D result = { vector->x * lambda, vector->y * lambda };
 	return result;
 }
 
-double vector2D_scalarVectProduct(vector2D vector1, vector2D vector2)
+double vector2D_scalarVectProduct(const vector2D * vector1, const vector2D * vector2)
 {
-	return (vector1.x * vector2.x + vector1.y * vector2.y);
+	return (vector1->x * vector2->x + vector1->y * vector2->y);
 }
 
-double vector2D_modulo(vector2D vector)
+double vector2D_modulo(const vector2D * vector)
 {
 	return sqrt(vector2D_scalarVectProduct(vector, vector)); // Square root of the scalar product of vector and itself
 }
 
-double vector2D_angle(vector2D vector1, vector2D vector2) {
+double vector2D_angle(const vector2D * vector1, const vector2D * vector2) {
 	return acos((vector2D_scalarVectProduct(vector1, vector2) / ((vector2D_modulo(vector1)) * (vector2D_modulo(vector2)))));  //angle given in radians
 }
 
 /* A bit more advanced operations*/
-vector2D vector2D_rotate(vector2D vector, double angleRad) {
+vector2D vector2D_rotate(const vector2D * vector, double angleRad) {
 	double rotationM[2][2] = { // Rotation matrix
 		{ cos(angleRad), -sin(angleRad) },
 		{ sin(angleRad), cos(angleRad) }
 	};
-	vector2D result = { rotationM[0][0] * vector.x + rotationM[0][1] * vector.y, rotationM[1][0] * vector.x + rotationM[1][1] * vector.y };
+	vector2D result = { rotationM[0][0] * vector->x + rotationM[0][1] * vector->y, rotationM[1][0] * vector->x + rotationM[1][1] * vector->y };
 	return result;
 }
 
-vector2D vector2D_normalize(vector2D vector)
+vector2D vector2D_normalize(const vector2D * vector)
 {
 	double norm = vector2D_modulo(vector);
-	vector2D result = { vector.x / norm , vector.y / norm };
+	vector2D result = { vector->x / norm , vector->y / norm };
 	return result;
 }
 
 /* User Interface functions */
-void vector2D_print(vector2D vector, unsigned char precision) {
-	printf("(%.*f, %.*f)", precision, vector.x, precision, vector.y); // See printf reference: http://www.cplusplus.com/reference/cstdio/printf/
+void vector2D_print(const vector2D * vector, unsigned char precision) {
+	printf("(%.*f, %.*f)", precision, vector->x, precision, vector->y); // See printf reference: http://www.cplusplus.com/reference/cstdio/printf/
 	return;
 }
 
