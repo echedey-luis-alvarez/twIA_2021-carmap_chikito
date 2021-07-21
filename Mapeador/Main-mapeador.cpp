@@ -166,8 +166,9 @@ int main() // Main function
         clearScreen(70);
     }
 
-    // Dibujar ejes del mapa
+    // Dibujar ejes y robot del mapa
     map_mapAxisPrint(&map);
+    map_rbPrintFromRobot(&map, rb);
 
     // Procesamiento de todo el algoritmo: entrada, procesamiento, salida en bucle
     while ( Arduino->IsConnected() and status != 255) // Mientras el Arduino est� conectado se puede proceder
