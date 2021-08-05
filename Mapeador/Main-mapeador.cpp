@@ -211,7 +211,7 @@ int main() // Main function
             printf("The use of the key '%c' is deprecated.", puls);
         default:
             status = 0;
-            break;
+            continue; // These previous conditions make the loop start again without further processing
         }
 
         if (rb_moveByDefs(rb, status, BufferSalida, BUF, &millisWait) == 0) {
