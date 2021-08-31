@@ -11,6 +11,7 @@
 #include <stdbool.h>// Usamos variables booleanas para el tipo de movimiento y su sentido
 #include <conio.h>
 #include <windows.h> // Para hacer el mapeador con la funcion gotoxy junto con la libreria conio.h
+#include <locale.h>
 
 #include "libs/vector.h" // Custom library to create and operate vectors easily
 #include "libs/SerialClass.h" // Retrieved from: https://github.com/Gmatarrubia/LibreriasTutoriales (modified local resources)
@@ -171,7 +172,7 @@ int main() // Main function
     map_rbPrintFromRobot(&map, rb);
 
     // Procesamiento de todo el algoritmo: entrada, procesamiento, salida en bucle
-    while ( Arduino->IsConnected() and status != 255) // Mientras el Arduino est� conectado se puede proceder
+    while ( ( Arduino->IsConnected() ) and status != 255) // Mientras el Arduino est� conectado se puede proceder
     {
         // Entrada de datos - pulsaciones del teclado
         puls = _getch();
@@ -229,7 +230,7 @@ int main() // Main function
             gotoxy(0, 3);
             printf("Waiting...");
             gotoxy_coord(&bufOutPos);
-            Sleep(millisWait);
+            //Sleep(millisWait);
             gotoxy(0, 3);
             clearScreen(12);
 
@@ -283,7 +284,8 @@ int command_Arduino_time_s(char* buffer, size_t sz, bool tipoMovimiento, bool se
             strcpy_s(sent, "der");
         }
     }
-    sprintf_s(buffer, sz, "t:%s,%s,%5u;", mov, sent, tiempoMilis);
+    // sprintf_s(buffer, sz, "t:%s,%s,%5u;", mov, sent, tiempoMilis);
+    sprintf_s(buffer, sz, "t,%s,%s,%5u", mov, sent, tiempoMilis);
     return 0;
 }
 

@@ -1,11 +1,12 @@
 /*  Project: CarMap - Chikito
  *  This file is the main program for the robot Chikito.
  */
-// Referencas a Bibliotecas
 
-// Enumeraciones que facilitan la lectura del código
-
-// Variables globales
+// Definiciones tipos movimientos
+#define MOVE_forward (char)1
+#define MOVE_backward (char)2
+#define MOVE_left (char)3
+#define MOVE_right (char)4
 
 //Motor 1 es el motor de la derecha
 #define motor1_IZQ 6
@@ -17,7 +18,6 @@
 
 void setup()
 {
-  // put your setup code here, to run once:
   // Tareas de configuración 
   Serial.begin(9600);
 
@@ -47,21 +47,66 @@ void motor2PARA();
 
 void loop()
 {
-  // put your main code here, to run repeatedly:
   if (Serial.available() > 0)  // Si hay mensajes procedentes del PC  
     procesar_accion();
     
   delay(50);
 } 
 
-// Resto de acciones 
-
+// Resto de acciones
 int procesar_accion(void)
 {
-  unsigned int tiempoMilis=0;
-  char movimiento[4],sentido[4],tiempo[6];
-  String cadena = Serial.readStringUntil('\n'); // Lee mensaje
-  if(cadena[0]=='t' && cadena[1]==':') 
+  String cadena = Serial.readStringUntil('\n'); // Lee mensaje, formateado como línea de un archivo CSV
+  cmd = strtok(cadena, ",");
+  if(!strcmp(cmd, "t"))
+  {
+    // Proto is time
+    unsigned int tiempoMilis = 0;
+    char moveType = 0;
+    cmd = strtok(NULL, ",");
+    if(!strcmp(cmd, "lin"))
+    {
+      // Movimiento lineal
+      moveType = 2;
+    }
+    else if(!strcmp(cmd, "rot"))
+    {
+      // Movimiento rotacional
+      moveType = 4;
+    }
+    else
+      return 2;
+
+    cmd = strtok(NULL, ",");
+    if(!strcmp(cmd, "del") or !strcmp(cmd, "izq")) // Warning: this doesn't verify whether del/atr or izq/der are consistent with types lin and rot respectively
+      moveType--;
+    else if(strcmp(cmd, "atr") and strcmp(cmd, "der")) // Second argument is not any of these or previous, so return an error
+      return 4;
+
+    cmd = strtok(NULL, ",");
+    tiempoMilis = atoi(cmd);
+
+    switch (moveType) // Realizamos el movimiento
+    {
+      case MOVE_forward:
+        delante();
+        break;
+      case MOVE_backward:
+        detras();
+        break;
+      case MOVE_left:
+        izquierda();
+        break;
+      case MOVE_right:
+        derecha();
+        break;
+    }
+    delay(tiempoMilis);
+    parar();
+  }
+  else
+    return 1;
+  /* if(cadena[0]=='t' && cadena[1]==':') 
   {
     for(int i=0;i<3;i++)
     {
@@ -115,7 +160,7 @@ int procesar_accion(void)
     return 1;
   }
   delay(tiempoMilis);
-  parar(); //Parar
+  parar(); //Parar*/
   return 0;
 }
 
